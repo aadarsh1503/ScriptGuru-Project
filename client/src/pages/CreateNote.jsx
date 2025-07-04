@@ -4,7 +4,7 @@ import NoteForm from '../components/NoteForm';
 import { toast } from 'react-toastify';   // <<< 1. Import toast
 import { FaTrash } from 'react-icons/fa'; // <<< 2. Import the Trash Icon
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || 'https://scriptguru-project.onrender.com/';
 
 export default function CreateNote() {
   // State for the creation form

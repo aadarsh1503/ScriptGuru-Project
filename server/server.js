@@ -13,7 +13,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketio(server, {
   cors: {
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: process.env.FRONTEND_URL || 'https://script-guru-project.vercel.app/',
     methods: ['GET', 'POST']
   }
 });

@@ -6,7 +6,7 @@ import ActiveUsers from '../components/ActiveUsers';
 import CopyLinkButton from '../components/CopyLinkButton'; // Make sure this component exists
 
 // Define API URL from environment variables, with a fallback for local development
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL || 'https://scriptguru-project.onrender.com/';
 
 /**
  * StatusIndicator Component: Displays the current save status with a colored dot.
