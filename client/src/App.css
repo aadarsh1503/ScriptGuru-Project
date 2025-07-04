@@ -1,0 +1,349 @@
+/* --- ROOT & GLOBAL STYLES --- */
+:root {
+  --bg-dark: #0D1117;
+  --bg-glass: rgba(22, 27, 34, 0.5);
+  --border-color: rgba(139, 148, 158, 0.3);
+  --primary-glow: #6366F1;
+  --primary-glow-rgb: 99, 102, 241;
+  --text-primary: #c9d1d9;
+  --text-secondary: #8b949e;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  /* Futuristic Aurora Background */
+  background-image: radial-gradient(at 20% 20%, hsla(212, 60%, 25%, 0.3) 0px, transparent 50%),
+                    radial-gradient(at 80% 20%, hsla(282, 60%, 25%, 0.25) 0px, transparent 50%),
+                    radial-gradient(at 20% 80%, hsla(320, 60%, 30%, 0.3) 0px, transparent 50%),
+                    radial-gradient(at 80% 80%, hsla(180, 60%, 25%, 0.2) 0px, transparent 50%);
+  background-attachment: fixed;
+  overflow-y: scroll;
+}
+
+.main-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* --- HEADER --- */
+.header {
+  border-bottom: 1px solid var(--border-color);
+}
+.header-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem;
+}
+.header-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  transition: filter 0.2s;
+}
+.header-link:hover { filter: drop-shadow(0 0 5px var(--primary-glow)); }
+.header-icon-wrapper {
+  background-color: var(--primary-glow);
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+}
+.header-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+}
+
+/* --- GLASS CARD (for Forms and Note) --- */
+.glass-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 2rem;
+}
+.note-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* This will create perfect spacing between the input group and the button */
+}
+/* --- FORM STYLES --- */
+.form-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.form-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+}
+.form-input {
+  width: 93%;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s ease-in-out;
+}
+.form-input:focus {
+  border-color: var(--primary-glow);
+  box-shadow: 0 0 0 3px rgba(var(--primary-glow-rgb), 0.2), 0 0 10px rgba(var(--primary-glow-rgb), 0.1);
+}
+
+/* --- GLOW BUTTON --- */
+.glow-button {
+  width: 100%;
+  background: var(--primary-glow);
+  color: white;
+  padding: 0.75rem 1rem;
+  margin-top: 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 5px var(--primary-glow), 0 0 10px rgba(var(--primary-glow-rgb), 0.3);
+}
+.glow-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px var(--primary-glow), 0 0 25px rgba(var(--primary-glow-rgb), 0.4);
+}
+.glow-button:disabled {
+  background: #374151;
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* --- NOTE PAGE --- */
+.note-header {
+  padding-bottom: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.note-title { font-size: 2rem; font-weight: 800; }
+.note-meta { display: flex; align-items: center; gap: 1.25rem; }
+
+/* --- EDITOR --- */
+.editor-textarea {
+  width: 100%;
+  background: transparent;
+  color: var(--text-primary);
+  border: none;
+  outline: none;
+  resize: none;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  min-height: 400px;
+}
+.editor-textarea::placeholder { color: var(--text-secondary); opacity: 0.6; }
+
+/* --- STATUS INDICATOR --- */
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(0,0,0,0.2);
+}
+.status-indicator .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.status-saved .dot { background-color: #22c55e; }
+.status-connecting .dot, .status-saving .dot { background-color: #3b82f6; animation: pulse 1.5s infinite; }
+.status-unsaved .dot { background-color: #f59e0b; }
+.status-error .dot { background-color: #ef4444; }
+
+/* --- ACTIVE USERS & COPY BUTTON --- */
+.icon-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid transparent;
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.icon-button:hover {
+  background: rgba(0,0,0,0.4);
+  border-color: var(--border-color);
+}
+.icon-button svg { width: 1rem; height: 1rem; }
+/* --- EXISTING NOTES LIST --- */
+.existing-notes-section {
+  max-width: 480px;
+  margin: 2.5rem auto 0;
+}
+
+.existing-notes-header {
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.existing-notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.note-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  background: var(--bg-glass);
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease-in-out;
+}
+
+.note-list-item:hover {
+  border-color: var(--primary-glow);
+  transform: translateY(-2px);
+  background: rgba(var(--primary-glow-rgb), 0.1);
+}
+
+.note-list-item-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.note-list-item-title {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.note-list-item-date {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.note-list-item-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--text-secondary);
+  transition: transform 0.2s;
+}
+
+.note-list-item:hover .note-list-item-icon svg {
+  transform: translateX(3px);
+  color: var(--primary-glow);
+}
+
+.no-notes-message {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 1rem;
+  background: var(--bg-glass);
+  border-radius: 0.5rem;
+  border: 1px dashed var(--border-color);
+}
+
+/* A simple loader for the list */
+.loader {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--border-color);
+  border-bottom-color: var(--primary-glow);
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+/* --- DELETE BUTTON STYLES --- */
+.delete-button {
+  position: absolute;
+  top: 50%;
+  right: 1.25rem;
+  transform: translateY(-50%) scale(0.8);
+  background: rgba(239, 68, 68, 0.1); /* Red-ish background */
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171; /* A nice red color for the icon */
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0; /* Initially hidden */
+  transition: all 0.2s; /* Apply transition to all properties */
+  z-index: 10;
+}
+
+/* Show button on hover of the WRAPPER */
+.note-list-item-wrapper:hover .delete-button {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+.delete-button:hover {
+  background: rgba(239, 68, 68, 0.3);
+  color: #fecaca; /* Brighter red on hover */
+  /* We can add a glow effect for the delete button too! */
+  box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); 
+}
+.name-prompt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+/* The react-icon will inherit the color. 
+   We can adjust its size like this. */
+.delete-button svg {
+  width: 16px;
+  height: 16px;
+}
