@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import NoteForm from '../components/NoteForm';
-import { toast } from 'react-toastify';   // <<< 1. Import toast
-import { FaTrash } from 'react-icons/fa'; // <<< 2. Import the Trash Icon
+import { toast } from 'react-toastify';   
+import { FaTrash } from 'react-icons/fa'; 
 
 const API_URL = import.meta.env.VITE_API_URL || 'https://scriptguru-project.onrender.com/';
 
@@ -26,7 +26,7 @@ export default function CreateNote() {
         setExistingNotes(data);
       } catch (err) {
         console.error(err);
-        toast.error('Failed to load existing notes.'); // Toast on fetch error
+        toast.error('Failed to load existing notes.'); 
       } finally {
         setIsLoadingList(false);
       }
@@ -74,7 +74,7 @@ export default function CreateNote() {
       });
       if (!response.ok) throw new Error('Failed to delete the note.');
 
-      // Find the note title for a better toast message
+    
       const deletedNoteTitle = existingNotes.find(n => n._id === noteId)?.title || 'Note';
 
       setExistingNotes(prevNotes => prevNotes.filter(note => note._id !== noteId));

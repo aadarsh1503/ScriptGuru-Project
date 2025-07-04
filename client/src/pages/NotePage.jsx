@@ -3,17 +3,14 @@ import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import Editor from '../components/Editor';
 import ActiveUsers from '../components/ActiveUsers';
-import CopyLinkButton from '../components/CopyLinkButton'; // Make sure this component exists
+import CopyLinkButton from '../components/CopyLinkButton';
 
-// Define API URL from environment variables, with a fallback for local development
+
 const API_URL = import.meta.env.VITE_API_URL || 'https://scriptguru-project.onrender.com/';
 
-/**
- * StatusIndicator Component: Displays the current save status with a colored dot.
- * This is a good example of a small, reusable component within a larger page component.
- */
+
 const StatusIndicator = ({ status }) => {
-  // Determine class and text based on the status prop
+
   let statusClass = '';
   let text = '';
 
@@ -48,11 +45,7 @@ const StatusIndicator = ({ status }) => {
   );
 };
 
-/**
- * NotePage Component: The main view for collaborating on a single note.
- * Handles fetching note data, establishing a WebSocket connection,
- * and synchronizing content in real-time.
- */
+
 export default function NotePage() {
   const { id: noteId } = useParams();
   const [note, setNote] = useState(null);
@@ -61,13 +54,11 @@ export default function NotePage() {
   const [activeUsers, setActiveUsers] = useState(0);
   const [saveStatus, setSaveStatus] = useState('Connecting...');
   
-  // Refs for persistent values that don't cause re-renders
   const socketRef = useRef(null);
   const debounceTimer = useRef(null);
 
-  // Effect for fetching initial note data and setting up the WebSocket connection
   useEffect(() => {
-    // 1. Fetch initial note data via HTTP
+ 
     const fetchNote = async () => {
       try {
         setLoading(true);
@@ -88,11 +79,10 @@ export default function NotePage() {
 
     fetchNote();
 
-    // 2. Initialize WebSocket Connection
+   
     socketRef.current = io(API_URL);
     const socket = socketRef.current;
 
-    // --- Socket Event Listeners ---
     socket.on('connect', () => {
       console.log(`✅ [CONNECTED] Socket established with ID: ${socket.id}`);
       setSaveStatus('Connected');
@@ -116,41 +106,31 @@ export default function NotePage() {
 
     socket.on('disconnect', () => {
       console.log('❌ [DISCONNECTED] Socket connection lost!');
-      setSaveStatus('Error'); // Show connection error
+      setSaveStatus('Error');
     });
     
-    // --- Cleanup Logic ---
-    // This function runs when the component unmounts (e.g., user navigates away)
     return () => {
       if (socket) {
         console.log('🚪 [LEAVING] Disconnecting socket.');
         socket.disconnect();
       }
     };
-  }, [noteId]); // Re-run effect if the noteId in the URL changes
+  }, [noteId]);
 
-  /**
-   * Handles changes in the editor's content.
-   * Updates the local state immediately and sends the update to the server
-   * after a short delay (debouncing) to avoid excessive network requests.
-   */
   const handleContentChange = (newContent) => {
-    // Update local UI instantly for a smooth user experience
     setNote(prev => ({ ...prev, content: newContent }));
     setSaveStatus('Unsaved');
 
-    // Clear any existing debounce timer
     if (debounceTimer.current) {
-      clearTimeout(debounceTimer.caurrent);
+      clearTimeout(debounceTimer.current);
     }
 
-    // Set a new timer to send the update after 1 second of inactivity
     debounceTimer.current = setTimeout(() => {
       const socket = socketRef.current;
       if (socket && socket.connected) {
         console.log("✍️ [SEND] Sending 'note_update' to server.");
         socket.emit('note_update', { noteId, content: newContent });
-        setSaveStatus('Saved');
+        setSaveStatus('Saving...'); // Set to 'Saving...' right before emit
       } else {
         console.warn("⚠️ [WARN] Cannot send update, socket is not connected.");
         setSaveStatus('Error');
@@ -158,20 +138,24 @@ export default function NotePage() {
     }, 1000);
   };
   
-  // --- Render Logic ---
   if (loading) {
-    return <div className="loading-container">Loading Note Room...</div>; // TODO: Add a cool spinner
+    return <div className="loading-container">Loading Note Room...</div>;
   }
   
   if (error) {
-    return <div className="error-container">Error: {error}</div>; // TODO: Style this error state
+    return <div className="error-container">Error: {error}</div>;
   }
 
+
   return (
-    <div className="glass-card note-card animate-fade-in">
-      <div className="note-header">
-        <h2 className="note-title">{note?.title}</h2>
-        <div className="note-meta">
+
+    <div className="glass-card note-card animate-fade-in p-4 md:p-6">
+
+      <div className="note-header flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-4">
+      
+        <h2 className="note-title text-2xl md:text-3xl font-bold">{note?.title}</h2>
+
+        <div className="note-meta flex items-center flex-wrap gap-x-4 gap-y-2">
           <StatusIndicator status={saveStatus} />
           <ActiveUsers count={activeUsers} />
           <CopyLinkButton />

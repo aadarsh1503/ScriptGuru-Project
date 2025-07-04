@@ -1,4 +1,6 @@
 /* --- ROOT & GLOBAL STYLES --- */
+
+@import "tailwindcss";
 :root {
   --bg-dark: #0D1117;
   --bg-glass: rgba(22, 27, 34, 0.5);
@@ -240,7 +242,58 @@ body {
   transform: translateY(-2px);
   background: rgba(var(--primary-glow-rgb), 0.1);
 }
+@import 'highlight.js/styles/atom-one-dark.css';
 
+/* Main container for the split view */
+.note-page-container {
+  display: flex;
+  gap: 1.5rem; /* Space between editor and preview */
+  height: 100%; /* Make it fill the available space */
+  overflow: hidden; /* Prevent scrolling on the main container */
+}
+
+/* Styles for the editor and preview panes */
+.editor-pane,
+.preview-pane {
+  flex: 1; /* Each pane takes up 50% of the width */
+  height: 100%;
+  overflow-y: auto; /* Allow independent scrolling for each pane */
+  padding: 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+
+/* Specific styling for the preview pane to make it look like a document */
+.preview-pane {
+  background-color: rgba(255, 255, 255, 0.9); /* Lighter background for contrast */
+  color: #1a1a1a;
+}
+
+/* Basic styling for rendered markdown elements */
+.preview-pane h1, .preview-pane h2, .preview-pane h3 {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.3em;
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+}
+
+.preview-pane code {
+  background-color: #f0f0f0;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+}
+
+.preview-pane pre code {
+  background-color: transparent; /* The highlight.js theme will handle the background */
+  padding: 0;
+}
+
+.preview-pane blockquote {
+  border-left: 4px solid #ccc;
+  padding-left: 1em;
+  color: #555;
+  margin-left: 0;
+}
 .note-list-item-content {
   display: flex;
   flex-direction: column;

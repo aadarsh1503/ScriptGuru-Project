@@ -13,9 +13,9 @@ const server = http.createServer(app);
 
 
 const corsOptions = {
-    origin: [process.env.FRONTEND_URL, 'http://localhost:5174'], // Allow both production and local development
+    origin: [process.env.FRONTEND_URL, 'http://localhost:5174'],
     methods: ['GET', 'POST', 'DELETE'],
-    credentials: true // If you need to send cookies or authentication headers
+    credentials: true 
   };
   
   app.use(cors(corsOptions));
@@ -29,17 +29,17 @@ const io = socketio(server, {
 });
 
 
-// --- DATABASE CONNECTION ---
+
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
 
-// --- ROUTES ---
+
 app.use('/api/notes', noteRoutes);
 
 
-// --- SOCKET.IO CONNECTION HANDLER ---
+
 io.on('connection', (socket) => socketController(socket, io));
 
 

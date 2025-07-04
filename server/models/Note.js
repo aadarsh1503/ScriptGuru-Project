@@ -10,15 +10,14 @@ const NoteSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
-  // --- This is the new field you need to add ---
+ 
   lastUpdatedBy: {
     type: String,
-    default: 'Anonymous' // A sensible default value
+    default: 'Anonymous' 
   }
-  // We have removed your manual 'updatedAt' field
+
 }, {
-  // --- This is the Mongoose best practice for handling timestamps ---
-  // It automatically creates and manages 'createdAt' and 'updatedAt' fields.
+
   timestamps: true 
 });
 

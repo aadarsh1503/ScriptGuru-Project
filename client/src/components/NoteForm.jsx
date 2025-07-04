@@ -1,6 +1,6 @@
 export default function NoteForm({ title, setTitle, onSubmit, isSubmitting, buttonText }) {
     return (
-      // *** FIX: Added className="note-form" to the form tag ***
+    
       <form onSubmit={onSubmit} className="note-form"> 
          <div>
         <label htmlFor="title" className="form-label">Note Title</label>

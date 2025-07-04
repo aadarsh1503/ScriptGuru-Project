@@ -39,13 +39,12 @@ exports.getNoteById = async (req, res) => {
     res.status(500).json({ message: 'Server error while fetching the note.' });
   }
 };
-// @desc    Get all notes (without their content for efficiency)
-// @route   GET /api/notes
+
 exports.getAllNotes = async (req, res) => {
     try {
       const notes = await Note.find({})
-        .select('title updatedAt') // Only select the title and updatedAt fields
-        .sort({ updatedAt: -1 });  // Sort by most recently updated
+        .select('title updatedAt') 
+        .sort({ updatedAt: -1 });  
   
       res.json(notes);
     } catch (err) {
@@ -69,17 +68,16 @@ exports.getAllNotes = async (req, res) => {
       res.status(500).json({ message: 'Server error while deleting the note.' });
     }
   };
-// @desc    Update a note's content (fallback, not used in primary real-time flow)
-// @route   PUT /api/notes/:id
+
 exports.updateNote = async (req, res) => {
   try {
     const { content } = req.body;
     
-    // Note: Mongoose `timestamps: true` will handle `updatedAt` automatically.
+
     const note = await Note.findByIdAndUpdate(
       req.params.id,
-      { content }, // Only update the content
-      { new: true, runValidators: true } // {new: true} returns the updated document
+      { content }, 
+      { new: true, runValidators: true } 
     );
 
     if (!note) {
