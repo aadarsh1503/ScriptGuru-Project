@@ -13,18 +13,12 @@ const server = http.createServer(app);
 
 
 const corsOptions = {
-
-  origin: process.env.FRONTEND_URL, 
+    origin: [process.env.FRONTEND_URL, 'http://localhost:5174'], // Allow both production and local development
+    methods: ['GET', 'POST', 'DELETE'],
+    credentials: true // If you need to send cookies or authentication headers
+  };
   
-
-  methods: ['GET', 'POST', 'DELETE'] 
-};
-
-
-
-
-
-app.use(cors(corsOptions)); 
+  app.use(cors(corsOptions));
 
 app.use(express.json());
 
